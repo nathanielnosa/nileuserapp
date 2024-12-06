@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,8 +12,14 @@ from django.contrib.auth import authenticate, login,logout
 
 # registration
 class RegistrationView(APIView):
+    def get(self,request):
+        if request.user.is_authenticated:
+            return redirect('dashboard')
     def post(self,request):
         try:
+            if request.user.is_authenticated:
+                return Response({"Message":"You are logged in already"})
+            
             serializer = RegistrationSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -44,3 +51,11 @@ class LogoutView(APIView):
         except Exception as e:
             return Response({'error':str(e)}, status = status.HTTP_INTERNAL_SERVER_ERROR)
 
+# dashboard
+class DashboardView(APIView):
+    def get(self,request):
+        try:
+            user = request.user.profile
+            return Response({"Message": "welcome" +" "+ user.fullname})
+        except Exception as e:
+            return Response({'error':str(e)}, status = status.HTTP_INTERNAL_SERVER_ERROR)
