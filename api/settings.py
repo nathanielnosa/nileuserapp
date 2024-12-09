@@ -3,6 +3,8 @@ import dj_database_url
 
 from dotenv import load_dotenv
 load_dotenv()
+
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 DEBUG = False
-ALLOWED_HOSTS = ['localhost','127.0.0.1:8000']
+ALLOWED_HOSTS = ['localhost','127.0.0.1:8000','https://nileuserapp.onrender.com','nileuserapp.onrender.com']
 
 
 # Application definition
@@ -30,8 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'userapps.apps.UserappsConfig',
-    'rest_framework'
+    'rest_framework',
+    'userapps.apps.UserappsConfig'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +71,7 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 if os.environ.get('DATABASEURL'):
-    DATABASES = {
+    DATABASES={
         'default': dj_database_url.parse(os.environ['DATABASEURL'])
     }
 else:
@@ -79,6 +81,7 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
 
 
 # Password validation
