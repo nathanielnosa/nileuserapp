@@ -69,18 +69,29 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-if os.environ.get('DATABASEURL'):
-    DATABASES={
-        'default': dj_database_url.parse(os.environ['DATABASEURL'])
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
     }
 else:
+    print("Using default SQLite database. DATABASEURL not set.")
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+# if os.environ.get('DATABASEURL'):
+#     DATABASES={
+#         'default': dj_database_url.parse(os.environ['DATABASEURL'])
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
 
 
 
